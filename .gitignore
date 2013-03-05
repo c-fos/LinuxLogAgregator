@@ -1,4 +1,5 @@
 settings.sh
-lastLogs/*
+lastLogs/*.log
+lastLogs/*.bz2
 logger.log
 .project
