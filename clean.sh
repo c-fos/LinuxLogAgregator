@@ -20,5 +20,6 @@
 set -o nounset                              # Treat unset variables as an error
 rm $LOGGERLOG
 rm ${LOGDIR}/*
-echo "cleaning done"
+echo "cleaning and log initialization done" >  $LOGGERLOG
+
 
