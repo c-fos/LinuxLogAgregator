@@ -1,0 +1,29 @@
+#!/bin/bash - 
+#===============================================================================
+#
+#          FILE: settings.sh
+# 
+#         USAGE: ./settings.sh 
+# 
+#   DESCRIPTION: 
+# 
+#       OPTIONS: ---
+#  REQUIREMENTS: ---
+#          BUGS: ---
+#         NOTES: ---
+#        AUTHOR: YOUR NAME (), 
+#  ORGANIZATION: 
+#       CREATED: 05.03.2013 18:18:40 NOVT
+#      REVISION:  ---
+#===============================================================================
+
+set -o nounset                              # Treat unset variables as an error
+#----------
+# Variables
+#----------
+LOGDIR="./lastLogs"                             # the directory where logs will be saved
+SHORT_DATE=`date +%F`                           # actualy the filename of archive with logs
+LOGGERLOG="./logger.log"                        # the log of logAgregator.sh
+IDENTIFICATOR="first server"                    # or should i use the hostname instead?
+EMAIL="your@email.com"                          # the email to send logs. mutt should be configured
+
