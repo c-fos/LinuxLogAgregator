@@ -21,12 +21,20 @@ set -o nounset                              # Treat unset variables as an error
 #check of .sh file existance
 BASE_FILE_LIST=(./archiver.sh ./logAgregator.sh ./settings.sh ./clean.sh ./sender.sh)
 OPTIONAL_FILE_LIST=( "./daily.sh" "./monthly.sh" "./hourly.sh")
+BASE_DIR_LIST=(./lastLogs)
 
 for path in ${BASE_FILE_LIST[@]}
 do
 	[ -f "$path" ] && \
       	echo "$path is the path of a real file" || \
         echo "No such file: $path"
+done
+
+for path in ${BASE_DIR_LIST[@]}
+do
+	[ -d "$path" ] && \
+      	echo "$path is the path of a real folder" || \
+        echo "No such folder: $path"
 done
 
 for path in ${OPTIONAL_FILE_LIST[@]}
