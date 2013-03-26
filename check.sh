@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash - 
 
 # Copyright 2013 ilya malakhin
 #  This file is part of LinuxLogAgregator.
@@ -17,8 +17,21 @@
 #    along with LinuxLogAgregator.  If not, see <http://www.gnu.org/licenses/>.
 
 set -o nounset                              # Treat unset variables as an error
-#for correct work ssmtp and mutt should be configured
-#
-exec `cat $LOGGERLOG|mutt -a lastLogs/*.tar.bz2 -s "$IDENTIFICATOR" -- $EMAIL`
 
+#check of .sh file existance
+BASE_FILE_LIST=(./archiver.sh ./logAgregator.sh ./settings.sh ./clean.sh ./sender.sh)
+OPTIONAL_FILE_LIST=( "./daily.sh" "./monthly.sh" "./hourly.sh")
 
+for path in ${BASE_FILE_LIST[@]}
+do
+	[ -f "$path" ] && \
+      	echo "$path is the path of a real file" || \
+        echo "No such file: $path"
+done
+
+for path in ${OPTIONAL_FILE_LIST[@]}
+do
+	[ -f "$path" ] && \
+      	echo "$path is the path of a real file" || \
+        echo "No such file: $path"
+done
