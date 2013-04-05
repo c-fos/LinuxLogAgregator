@@ -17,12 +17,13 @@
 #    along with LinuxLogAgregator.  If not, see <http://www.gnu.org/licenses/>.
 
 
-FILENAME="$LOGDIR/`date +%x`.log"
+FILENAME="$LOGDIR/`date +%d_%m_%y`.log"
 
 DATE="date +%x_%X"
 UNAME="uname -n -r -s"
 SPACE="df -h"
 DMESG="dmesg"
+LOG_FILES_TO_CAT=( "/var/log/apcupsd.events" "/var/log/debug" "/var/log/syslog" )
 
 echo "Daily log for:" > $FILENAME
 exec `$DATE >> $FILENAME`
@@ -30,5 +31,13 @@ exec `$UNAME >> $FILENAME`
 echo "Space left:" >> $FILENAME
 exec `$SPACE >> $FILENAME`
 exec `$DMESG > $LOGDIR/dmesg.log`
+
+for logfile in ${LOG_FILES_TO_CAT[@]}
+do
+	[ -f "$logfile" ] && \
+      	echo "Last 1000 records in $logfile" >> $FILENAME &&
+        exec `tail -n 1000 $logfile >> $FILENAME` || \
+        echo "Daily. No such file: $logfile"
+done
 #exec `cp /var/log/SOMELOG ${LOGDIR}/` #you could copy all logs you need to $LOGDIR
 echo "Daily logs aggregation done"

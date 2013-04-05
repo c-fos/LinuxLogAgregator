@@ -24,4 +24,4 @@ SHORT_DATE=`date +%F`                           # actualy the filename of archiv
 LOGGERLOG="./logger.log"                        # the log of logAgregator.sh
 IDENTIFICATOR="first server"                    # or should i use the hostname instead?
 EMAIL="your@email.com"                          # the email to send logs. mutt should be configured
-
+DBNAME=""                                       # unuseful for most of users
