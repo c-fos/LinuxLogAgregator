@@ -19,6 +19,7 @@
 FILENAME="$LOGDIR/`date +%d_%m_%y_%X`.log"
 
 DATE="date +%x_%X"
+FILTER="`date '+%b %e %H'`"
 UNAME="uname -n -r -s"
 UPTIME="uptime"
 MEMORY="free -m"
@@ -47,8 +48,10 @@ exec `$NETSTAT >> $FILENAME`
 for logfile in ${LOG_FILES_TO_CAT[@]}
 do
 	[ -f "$logfile" ] && \
-      	echo "Last 100 records in $logfile" >> $FILENAME &&
-        exec `tail -n 100 $logfile >> $FILENAME` || \
+      	echo "Last hour\`s 100 records in $logfile" >> $FILENAME &&
+        echo "$FILTER" >> $FILENAME &&
+        echo "$logfile" >> $FILENAME &&
+        exec `grep "$FILTER" $logfile | tail -n 100 >> $FILENAME` || \  # 
         echo "Hourly. No such file: $logfile"
 done
 

@@ -17,7 +17,7 @@
 #    along with LinuxLogAgregator.  If not, see <http://www.gnu.org/licenses/>.
 
 FILENAME="$LOGDIR/`date +%m.%Y`.log"
-
+FILTER="`date '+%b'`"
 DATE="date +%x_%X"
 UNAME="uname -a"
 UPTIME="uptime"
@@ -44,7 +44,7 @@ for logfile in ${LOG_FILES_TO_CAT[@]}
 do
 	[ -f "$logfile" ] && \
       	echo "Last 1000 records in $logfile" >> $FILENAME &&
-        exec `tail -n 1000 $logfile >> $FILENAME` || \
+        `grep "$FILTER" $logfile|tail -n 1000 >> $FILENAME` || \  # 
         echo "Monthly. No such file: $logfile"
 done
 #exec `cp /var/log/SOMELOG ${LOGDIR}/` #you could copy all logs you need to $LOGDIR

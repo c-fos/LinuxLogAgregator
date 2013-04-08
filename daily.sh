@@ -18,7 +18,7 @@
 
 
 FILENAME="$LOGDIR/`date +%d_%m_%y`.log"
-
+FILTER="`date '+%b %e'`"
 DATE="date +%x_%X"
 UNAME="uname -n -r -s"
 SPACE="df -h"
@@ -36,7 +36,7 @@ for logfile in ${LOG_FILES_TO_CAT[@]}
 do
 	[ -f "$logfile" ] && \
       	echo "Last 1000 records in $logfile" >> $FILENAME &&
-        exec `tail -n 1000 $logfile >> $FILENAME` || \
+        exec `grep "$FILTER" $logfile|tail -n 1000 >> $FILENAME` || \  # 
         echo "Daily. No such file: $logfile"
 done
 #exec `cp /var/log/SOMELOG ${LOGDIR}/` #you could copy all logs you need to $LOGDIR
