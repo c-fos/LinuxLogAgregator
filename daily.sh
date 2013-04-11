@@ -36,7 +36,10 @@ for logfile in ${LOG_FILES_TO_CAT[@]}
 do
 	[ -f "$logfile" ] && \
       	echo "Last 1000 records in $logfile" >> $FILENAME &&
-        exec `grep "$FILTER" $logfile|tail -n 1000 >> $FILENAME` || \  # 
+        #exec `grep "$FILTER" $logfile|tail -n 1000 >> $FILENAME` || \  #
+        exec `grep "$FILTER" $logfile > ".tmpfile"` && \
+        exec `tail -n 1000 "./.tmpfile" >> $FILENAME` && \
+        echo "" > "./.tmpfile" || \
         echo "Daily. No such file: $logfile"
 done
 #exec `cp /var/log/SOMELOG ${LOGDIR}/` #you could copy all logs you need to $LOGDIR

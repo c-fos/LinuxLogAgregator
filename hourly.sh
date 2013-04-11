@@ -48,10 +48,10 @@ exec `$NETSTAT >> $FILENAME`
 for logfile in ${LOG_FILES_TO_CAT[@]}
 do
 	[ -f "$logfile" ] && \
-      	echo "Last hour\`s 100 records in $logfile" >> $FILENAME &&
-        echo "$FILTER" >> $FILENAME &&
-        echo "$logfile" >> $FILENAME &&
-        exec `grep "$FILTER" $logfile | tail -n 100 >> $FILENAME` || \  # 
+      	echo "Last hour\`s 100 records in $logfile" >> $FILENAME && \
+        exec `grep "$FILTER" $logfile > ".tmpfile"` && \
+        exec `tail -n 100 "./.tmpfile" >> $FILENAME` && \
+        echo "" > "./.tmpfile" || \
         echo "Hourly. No such file: $logfile"
 done
 
