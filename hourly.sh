@@ -55,4 +55,4 @@ do
         echo "Hourly. No such file: $logfile"
 done
 
-echo "Hourly log aggregation done. $DATE"
+echo "Hourly log aggregation done. `$DATE`"

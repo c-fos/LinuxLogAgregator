@@ -51,4 +51,4 @@ do
         echo "Monthly. No such file: $logfile"
 done
 #exec `cp /var/log/SOMELOG ${LOGDIR}/` #you could copy all logs you need to $LOGDIR
-echo "monthly log aggregation done"
+echo "monthly log aggregation done `$DATE`"

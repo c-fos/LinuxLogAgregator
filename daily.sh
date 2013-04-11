@@ -43,4 +43,4 @@ do
         echo "Daily. No such file: $logfile"
 done
 #exec `cp /var/log/SOMELOG ${LOGDIR}/` #you could copy all logs you need to $LOGDIR
-echo "Daily logs aggregation done"
+echo "Daily logs aggregation done `$DATE`"
