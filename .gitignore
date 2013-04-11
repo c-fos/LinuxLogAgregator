@@ -3,3 +3,4 @@ lastLogs/*.log
 lastLogs/*.bz2
 logger.log
 .project
+.tmpfile
