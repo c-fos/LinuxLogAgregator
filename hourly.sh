@@ -30,27 +30,27 @@ TEMP1="cat /sys/class/thermal/thermal_zone0/temp" # add cycle to monitor all sen
 NETSTAT="netstat"
 LOG_FILES_TO_CAT=( "/var/log/daemon.log" "/var/log/mail.log" "/var/log/debug" "/var/log/dmesg" )
 
-echo "Hourly log for:" > $FILENAME
-exec `$DATE >> $FILENAME`
-exec `$UNAME >> $FILENAME`
-exec `$UPTIME >> $FILENAME`
-echo "Memory usage" >> $FILENAME
-exec `$MEMORY >> $FILENAME`
-exec `$MEMORY2 >> $FILENAME`
-echo "Processes running" >> $FILENAME
-exec `$PROCESSES >> $FILENAME`
-exec `$USERS >> $FILENAME`
-echo "Temperarure" >> $FILENAME
-exec `$TEMP1 >> $FILENAME`
-echo "Netstat" >> $FILENAME
-exec `$NETSTAT >> $FILENAME`
+echo "Hourly log for:" > "${FILENAME}"
+exec `$DATE >> "${FILENAME}"`
+exec `$UNAME >> "${FILENAME}"`
+exec `$UPTIME >> "${FILENAME}"`
+echo "Memory usage" >> "${FILENAME}"
+exec `$MEMORY >> "${FILENAME}"`
+exec `$MEMORY2 >> "${FILENAME}"`
+echo "Processes running" >> "${FILENAME}"
+exec `$PROCESSES >> "${FILENAME}"`
+exec `$USERS >> "${FILENAME}"`
+echo "Temperarure" >> "${FILENAME}"
+exec `$TEMP1 >> "${FILENAME}"`
+echo "Netstat" >> "${FILENAME}"
+exec `$NETSTAT >> "${FILENAME}"`
 #exec `cp /var/log/SOMELOG ${LOGDIR}/` #you could copy all logs you need to $LOGDIR
 for logfile in ${LOG_FILES_TO_CAT[@]}
 do
 	[ -f "$logfile" ] && \
-      	echo "Last hour\`s 100 records in $logfile" >> $FILENAME && \
+      	echo "Last hour\`s 100 records in $logfile" >> "${FILENAME}" && \
         exec `grep "$FILTER" $logfile > ".tmpfile"` && \
-        exec `tail -n 100 "./.tmpfile" >> $FILENAME` && \
+        exec `tail -n 100 "./.tmpfile" >> "${FILENAME}"` && \
         echo "" > "./.tmpfile" || \
         echo "Hourly. No such file: $logfile"
 done

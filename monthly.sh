@@ -27,26 +27,26 @@ LOGSIZE="du /var/log/ -ah"
 FIREBIRDDBINFO="/opt/firebird/bin/gstat -l $DBNAME"  #unuseful for most of users
 LOG_FILES_TO_CAT=( "/var/log/fsck/checkfs" "/var/log/fsck/checkroot" "/var/log/boot" )
 
-echo "Monthly log for:" > $FILENAME
-exec `$DATE >> $FILENAME`
-exec `$UNAME >> $FILENAME`
-exec `$UPTIME >> $FILENAME`
-echo "S.M.A.R.T. information" >> $FILENAME
-exec `$SMART1 >> $FILENAME`
-exec `$SMART2 >> $FILENAME`
-echo "log size" >>  $FILENAME
-exec `$LOGSIZE >> $FILENAME`
-echo "Firebird db info" >> $FILENAME
-[ -f "/opt/firebird/bin/gstat" ] && exec `$FIREBIRDDBINFO >> $FILENAME` || \
+echo "Monthly log for:" > "${FILENAME}"
+exec `$DATE >> "${FILENAME}"`
+exec `$UNAME >> "${FILENAME}"`
+exec `$UPTIME >> "${FILENAME}"`
+echo "S.M.A.R.T. information" >> "${FILENAME}"
+exec `$SMART1 >> "${FILENAME}"`
+exec `$SMART2 >> "${FILENAME}"`
+echo "log size" >>  "${FILENAME}"
+exec `$LOGSIZE >> "${FILENAME}"`
+echo "Firebird db info" >> "${FILENAME}"
+[ -f "/opt/firebird/bin/gstat" ] && exec `$FIREBIRDDBINFO >> "${FILENAME}"` || \
 echo "Monthly. No such file: /opt/firebird/bin/gstat"
 
 for logfile in ${LOG_FILES_TO_CAT[@]}
 do
 	[ -f "$logfile" ] && \
-      	echo "Last 1000 records in $logfile" >> $FILENAME &&
-        #`grep "$FILTER" $logfile|tail -n 1000 >> $FILENAME` || \  #
+      	echo "Last 1000 records in $logfile" >> "${FILENAME}" &&
+        #`grep "$FILTER" $logfile|tail -n 1000 >> "${FILENAME}"` || \  #
         exec `grep "$FILTER" $logfile > ".tmpfile"` && \
-        exec `tail -n 1000 "./.tmpfile" >> $FILENAME` && \
+        exec `tail -n 1000 "./.tmpfile" >> "${FILENAME}"` && \
         echo "" > "./.tmpfile" || \
         echo "Monthly. No such file: $logfile"
 done

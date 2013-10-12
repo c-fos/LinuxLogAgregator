@@ -25,20 +25,20 @@ SPACE="df -h"
 DMESG="dmesg"
 LOG_FILES_TO_CAT=( "/var/log/apcupsd.events" "/var/log/debug" "/var/log/syslog" )
 
-echo "Daily log for:" > $FILENAME
-exec `$DATE >> $FILENAME`
-exec `$UNAME >> $FILENAME`
-echo "Space left:" >> $FILENAME
-exec `$SPACE >> $FILENAME`
+echo "Daily log for:" > "${FILENAME}"
+exec `$DATE >> "${FILENAME}"`
+exec `$UNAME >> "${FILENAME}"`
+echo "Space left:" >> "${FILENAME}"
+exec `$SPACE >> "${FILENAME}"`
 exec `$DMESG > $LOGDIR/dmesg.log`
 
 for logfile in ${LOG_FILES_TO_CAT[@]}
 do
 	[ -f "$logfile" ] && \
-      	echo "Last 1000 records in $logfile" >> $FILENAME &&
-        #exec `grep "$FILTER" $logfile|tail -n 1000 >> $FILENAME` || \  #
+      	echo "Last 1000 records in $logfile" >> "${FILENAME}" &&
+        #exec `grep "$FILTER" $logfile|tail -n 1000 >> "${FILENAME}"` || \  #
         exec `grep "$FILTER" $logfile > ".tmpfile"` && \
-        exec `tail -n 1000 "./.tmpfile" >> $FILENAME` && \
+        exec `tail -n 1000 "./.tmpfile" >> "${FILENAME}"` && \
         echo "" > "./.tmpfile" || \
         echo "Daily. No such file: $logfile"
 done
